@@ -13,6 +13,7 @@
   .character {
    background: url('Guest.jpg');
    background-size: cover;
+   background-color: lightblue; 
    width: 120px;
    height: 120px;
    padding: 10px;
@@ -29,6 +30,9 @@
   }
   .visible {
    display: block;
+  }
+  .grey {
+   filter:grayscale(80%);
   }
  </style>
 </head>
@@ -74,9 +78,11 @@
    board.children[randomNumber-1].innerHTML = "";
    board.children[randomNumber-1].onclick = function() {
     gameScore++;
+	board.children[randomNumber-1].className = classToSet + " thief" + " grey";
    }
    board.children[randomNumber-1].className = classToSet + " thief";
   }
+  
  </script>
 </body>
 </html>
