@@ -8,6 +8,6 @@ Repo for the missions in the [*Get Coding! books by David Whitney*](https://getc
 * [**Mission 3: Build an app**](https://jellypuff.github.io/get-coding/Coding/Mission3.html)
 * [**Mission 4: Plan a route**](https://jellypuff.github.io/get-coding/Coding/Mission4.html)
 * [**Mission 5: Make a game**](https://jellypuff.github.io/get-coding/Coding/Mission5.html)
-* **Mission 6: Your finished website**
+* [**Mission 6: Your finished website**](https://jellypuff.github.io/get-coding/Coding/index.html)
 
 All code files can be found [here](https://github.com/jellypuff/get-coding/tree/main/Coding).
