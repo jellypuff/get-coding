@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Noughts and Crosses</title>
+	<style>
+		.row div {
+			padding: 10px;
+			border: 1px solid black;
+			height: 50px;
+			width: 50px;
+			float: left;
+			background-color: coral;
+			color: white;
+			text-align: center;
+			font-size: 28px;
+			
+		}
+		
+		.row {
+			clear: both;
+		}
+
+
+		.hidden {
+			display: none;
+		}
+		
+		.visible {
+			display: block;
+			height: 100px;
+			padding: 10px;
+		}
+		
+		.winning {
+			background-color: lightgreen;
+		}
+		
+		
+		#footer {
+			padding-top: 20px;
+			clear: left;
+		}
+		
+	</style>
+</head>
+<body>
+	<h2>Click to play Noughts and Crosses.</h2>
+<img id="trophy" class = "hidden" src="trophy.png">
+<h3 id="winner"></h3>
+	<div>
+		<div class="row">
+			<div id="0_0" onclick="place(this)"></div>
+			<div id="1_0" onclick="place(this)"></div>
+			<div id="2_0" onclick="place(this)"></div>
+		</div>
+		<div class="row">
+			<div id="0_1" onclick="place(this)"></div>
+			<div id="1_1" onclick="place(this)"></div>
+			<div id="2_1" onclick="place(this)"></div>
+		</div>
+		<div class="row">
+			<div id="0_2" onclick="place(this)"></div>
+			<div id="1_2" onclick="place(this)"></div>
+			<div id="2_2" onclick="place(this)"></div>
+		</div>
+	</div>
+	
+	<script>
+	var currentPlayer = "O";
+	var won = false;
+		function place(box) {
+			if(box.innerText != "" || won) return;
+			box.innerText = currentPlayer;
+			currentPlayer == "O" ? currentPlayer = "X" : currentPlayer = "O";	
+			checkGameBoard();
+		}
+		function checkGameBoard() {
+		 for(var i = 0; i <=2; i++) {
+			checkWinner(document.getElementById("0_" + i).innerText,
+						document.getElementById("1_" + i).innerText,
+						document.getElementById("2_" + i).innerText);
+			checkWinner(document.getElementById(i + "_0").innerText,
+						document.getElementById(i + "_1").innerText,
+						document.getElementById(i + "_2").innerText);
+				}
+			
+		checkWinner(document.getElementById("0_0").innerText,
+					document.getElementById("1_1").innerText,
+					document.getElementById("2_2").innerText);
+		checkWinner(document.getElementById("0_2").innerText,
+					document.getElementById("1_1").innerText,
+					document.getElementById("2_0").innerText);
+			}
+	
+		function checkWinner(first, second, third) {
+			if(first != "" && first == second && first == third) {
+				var trophy = document.getElementById("trophy");
+				trophy.className = "visible";
+				//document.getElementById("0_0").style.color = 'lightgreen';
+				//document.getElementById("0_0").style.backgroundColor = 'lightgreen';
+				//document.getElementById("trophy").style.display = "block";	
+				//alert("Winner!");
+			
+				won = true;
+					winningPlayer();
+					highlightWins();
+			}
+		}
+		
+		function clearGame() {
+			document.location.reload();
+		}
+
+		
+		function winningPlayer() {
+			currentPlayer == "O" ? currentPlayer = "X" : currentPlayer = "O";
+			document.getElementById("winner").innerHTML = "Winner: Player " + currentPlayer + "!";
+		}
+		
+		/* placeholder for highlighting winning cells
+		// still under construction...
+		function highlightWins() {
+	
+		if(won = true && currentPlayer!="" && cell.textContent = currentPlayer) {
+			for (const cell of cells) {
+				cell.style.backgroundColor = 'lightgreen';
+				}
+			}	
+		}
+		*/
+		
+	</script>
+	
+<p id="footer"><input type="button" id="clear" value = "Clear Game" onclick = "clearGame()"></p>	
+	
+<p>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</p></div>
+	
+</body>
+</html>
