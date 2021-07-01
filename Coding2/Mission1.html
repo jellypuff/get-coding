@@ -12,14 +12,13 @@
 			background-color: coral;
 			color: white;
 			text-align: center;
-			font-size: 28px;
+			font-size: 30px;
 			
 		}
 		
 		.row {
 			clear: both;
 		}
-
 
 		.hidden {
 			display: none;
@@ -30,17 +29,11 @@
 			height: 100px;
 			padding: 10px;
 		}
-		
-		.winning {
-			background-color: lightgreen;
-		}
-		
-		
+			
 		#footer {
 			padding-top: 20px;
 			clear: left;
-		}
-		
+		}	
 	</style>
 </head>
 <body>
@@ -49,19 +42,19 @@
 <h3 id="winner"></h3>
 	<div>
 		<div class="row">
-			<div id="0_0" onclick="place(this)"></div>
-			<div id="1_0" onclick="place(this)"></div>
-			<div id="2_0" onclick="place(this)"></div>
+			<div id="cell1" onclick="place(this)"></div>
+			<div id="cell2" onclick="place(this)"></div>
+			<div id="cell3" onclick="place(this)"></div>
 		</div>
 		<div class="row">
-			<div id="0_1" onclick="place(this)"></div>
-			<div id="1_1" onclick="place(this)"></div>
-			<div id="2_1" onclick="place(this)"></div>
+			<div id="cell4" onclick="place(this)"></div>
+			<div id="cell5" onclick="place(this)"></div>
+			<div id="cell6" onclick="place(this)"></div>
 		</div>
 		<div class="row">
-			<div id="0_2" onclick="place(this)"></div>
-			<div id="1_2" onclick="place(this)"></div>
-			<div id="2_2" onclick="place(this)"></div>
+			<div id="cell7" onclick="place(this)"></div>
+			<div id="cell8" onclick="place(this)"></div>
+			<div id="cell9" onclick="place(this)"></div>
 		</div>
 	</div>
 	
@@ -75,59 +68,68 @@
 			checkGameBoard();
 		}
 		function checkGameBoard() {
-		 for(var i = 0; i <=2; i++) {
-			checkWinner(document.getElementById("0_" + i).innerText,
-						document.getElementById("1_" + i).innerText,
-						document.getElementById("2_" + i).innerText);
-			checkWinner(document.getElementById(i + "_0").innerText,
-						document.getElementById(i + "_1").innerText,
-						document.getElementById(i + "_2").innerText);
-				}
-			
-		checkWinner(document.getElementById("0_0").innerText,
-					document.getElementById("1_1").innerText,
-					document.getElementById("2_2").innerText);
-		checkWinner(document.getElementById("0_2").innerText,
-					document.getElementById("1_1").innerText,
-					document.getElementById("2_0").innerText);
-			}
-	
-		function checkWinner(first, second, third) {
-			if(first != "" && first == second && first == third) {
-				var trophy = document.getElementById("trophy");
-				trophy.className = "visible";
-				//document.getElementById("0_0").style.color = 'lightgreen';
-				//document.getElementById("0_0").style.backgroundColor = 'lightgreen';
-				//document.getElementById("trophy").style.display = "block";	
-				//alert("Winner!");
-			
-				won = true;
-					winningPlayer();
-					highlightWins();
-			}
+				victory("O");
+				victory("X");	
+			}			
+		
+		function findCell(x) {
+			return document.getElementById("cell" + x).innerText;
 		}
 		
-		function clearGame() {
-			document.location.reload();
-		}
+		
+		function victory(letter) {
 
+		var winner = false;
+
+		if (checkLine(1, 2, 3, letter) ||
+			checkLine(4, 5, 6, letter) ||
+			checkLine(7, 8, 9, letter) ||
+
+			checkLine(1, 4, 7, letter) ||
+			checkLine(2, 5, 8, letter) ||
+			checkLine(3, 6, 9, letter) ||
+
+			checkLine(1, 5, 9, letter) ||
+			checkLine(3, 5, 7, letter)) {
+			winner = true;
+			}
+			return winner;
+			}   
+		
 		
 		function winningPlayer() {
 			currentPlayer == "O" ? currentPlayer = "X" : currentPlayer = "O";
 			document.getElementById("winner").innerHTML = "Winner: Player " + currentPlayer + "!";
 		}
 		
-		/* placeholder for highlighting winning cells
-		// still under construction...
-		function highlightWins() {
-	
-		if(won = true && currentPlayer!="" && cell.textContent = currentPlayer) {
-			for (const cell of cells) {
-				cell.style.backgroundColor = 'lightgreen';
+		// adapted solution for highlighting cells from:
+		// https://stackoverflow.com/questions/61051253/change-text-color-of-a-winning-line
+		
+		function checkLine(x, y, z, letter) {
+		  var triple = false;
+
+		  if (findCell(x) == letter && findCell(y) == letter && findCell(z) == letter) {
+			triple = true;
+			
+		  var trophy = document.getElementById("trophy");
+				trophy.className = "visible";
+			
+			winningPlayer();
+			
+		 const cells = [x, y, z].map(num => document.getElementById("cell" + num));
+			if (cells.every(cell => cell.textContent === letter)) {
+				for (const cell of cells) {
+					cell.style.backgroundColor = "lightgreen";
 				}
-			}	
+				return true;
+			  }
+		  }
+		  return triple;
+			}
+
+		function clearGame() {
+			document.location.reload();
 		}
-		*/
 		
 	</script>
 	
