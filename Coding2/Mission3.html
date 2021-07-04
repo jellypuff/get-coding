@@ -9,10 +9,10 @@
 		var canvas = document.getElementById("canvas");
 		var ctx = canvas.getContext("2d");
 		
-		// store 640 and 480 either as variables or properties
-		// alternative for aiMiddle to belong in our paddle class
-		// use Math.random to make the AI paddle go the wrong way... huhu
-		
+		// store 640 and 480 either as variables or properties in an object
+		const cheight = canvas.offsetHeight;
+		const cwidth = canvas.offsetWidth;
+			
 		function paddle(x, y, width, height, color) {
 			this.x = x;
 			this.y = y;
@@ -25,6 +25,8 @@
 				var paddleRightWall = this.x + this.width;
 				var paddleTopWall = this.y;
 				var paddleBottomWall = this.y + this.height;
+			// alternative for variable aiMiddle to belong in our paddle class
+		    //	var paddleMiddle = this.y + (this.height / 2);	   
 				if(ball.x > paddleLeftWall 
 					&& ball.x < paddleRightWall
 					&& ball.y > paddleTopWall
@@ -104,12 +106,25 @@
 			for(var keyCode in heldDown) {
 				player.move(keyCode);
 			}
+
 			var aiMiddle = ai.y + (ai.height / 2);
+			
+		// use Math.random to make the AI paddle go the wrong way... huhu	
+			var randomMess = Math.random();
+			
 			if(aiMiddle < ball.y) {
+				if(randomMess < 0.8) {
 				ai.move(40);
+				} else {
+				ai.move(38);
+				}
 			}
 			if(aiMiddle > ball.y) {
+				if(randomMess < 0.8) {
 				ai.move(38);
+				} else {
+				ai.move(40);
+				};
 			}
 				
 		}
