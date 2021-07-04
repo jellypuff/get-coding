@@ -6,10 +6,8 @@
 <body>
 	<canvas id="canvas" width="640" height="480"></canvas>
 	<script>
+
 	
-	// adjust positions of platforms to create gaps / pits for players to avoid
-	// hint: change the leftValue variable when we generate new floor tiles
-	// and adjust the collision detection so the game ends if the player falls into a pit
 	
 		var canvas = document.getElementById("canvas");
 		var ctx = canvas.getContext("2d");
@@ -23,6 +21,7 @@
 			width: 640,
 			gravity: 10,
 			highestFloor: 240,
+			widestPit: 250,
 			speed: 6,
 			distanceTravelled: 0,
 			maxSpeed: 20,
@@ -51,7 +50,18 @@
 					biggestJumpableHeight = this.highestFloor;
 				}
 				var randomHeight = Math.floor(Math.random() * biggestJumpableHeight) + player.height;
-				var leftValue = (previousTile.x + previousTile.width);
+				
+				// adjust positions of platforms to create gaps / pits for players to avoid
+				// hint: change the leftValue variable when we generate new floor tiles
+				
+				var randomPit = Math.floor(Math.random() * this.widestPit)
+				
+				if(randomPit < 125) {
+					var leftValue = (previousTile.x + previousTile.width) + randomPit;
+				} else {
+				var leftValue = (previousTile.x + previousTile.width)
+				}
+				
 				var next = new floor(leftValue, randomHeight);
 				this.floorTiles.push(next);
 			},
@@ -112,7 +122,8 @@
 			applyGravity: function() {
 				this.currentDistanceAboveGround = this.getDistanceFor(this.x);
 				var rightHandSideDistance = this.getDistanceFor(this.x + this.width);
-				if(this.currentDistanceAboveGround < 0 || rightHandSideDistance < 0) {
+				// and adjust the collision detection so the game ends if the player falls into a pit
+				if(this.currentDistanceAboveGround < 0 || rightHandSideDistance < 0 || this.y > 480) {
 					world.stop();
 				}
 			},
